@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createUser } from '../Api/api';
-
+import {useNavigate} from 'react-router-dom'
 export default function SignUp() {
     const [formData, setFormData] = useState({
         username: '',
@@ -9,6 +9,7 @@ export default function SignUp() {
         confirmPassword: '',
         phoneNumber: '',
     });
+    const nav = useNavigate()
 
     const [error, setError] = useState('');
 
@@ -35,6 +36,8 @@ export default function SignUp() {
                 phoneNumber: '',
             });
             alert('Sign up successful');
+            nav('/home')
+
         } catch (error) {
             console.error('Error submitting form:', error);
             setError('Error submitting form');
@@ -56,7 +59,7 @@ export default function SignUp() {
                     </div>
                     <div className="flex flex-col mb-4">
                         <label className="text-gray-700">Password:</label>
-                        <input type="password" name="password" value={formData.password} onChange={handleInputChange} className="input-field w-60 border m-auto my-1 p-1" placeholder="Enter your password" />
+                        <input type="password" name="password" value={  formData.password} onChange={handleInputChange} className="input-field w-60 border m-auto my-1 p-1" placeholder="Enter your password" />
                     </div>
                     <div className="flex flex-col mb-4">
                         <label className="text-gray-700">Confirm Password:</label>

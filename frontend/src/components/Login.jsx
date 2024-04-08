@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { loginUser } from '../Api/api';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const [formData, setFormData] = useState({
         username: '',
         password: '',
     });
-
+    const nav = useNavigate() ;
     const [error, setError] = useState('');
 
     const handleInputChange = (e) => {
@@ -22,6 +22,7 @@ export default function Login() {
             const identifiant = { username, password };
             await loginUser(identifiant);
             alert('Login successful');
+            nav('/home')
         } catch (error) {
             console.error('Error during login:', error);
             setError('Error during login');
