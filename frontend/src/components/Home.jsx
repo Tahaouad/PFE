@@ -10,8 +10,7 @@ export default function Home() {
     const [selectionEnd, setSelectionEnd] = useState(null);
     const [selectedCells, setSelectedCells] = useState([]);
     const [groups, setGroups] = useState(['AA102', 'AA101', 'GE201', 'GE302', 'Dev101', 'Dev102']); // Liste des groupes scolaires
-    const [selectedGroup, setSelectedGroup] = useState(null); // Groupe sélectionné
-
+    const [selectedGroup, setSelectedGroup] = useState(null); 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
