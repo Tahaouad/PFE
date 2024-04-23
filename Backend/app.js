@@ -6,12 +6,11 @@ const bcrypt = require('bcryptjs');
 
 const app = express();
 const PORT = 3000;
-const SESSION_SECRET = 'YourSessionSecret';  // Assurez-vous de remplacer ceci par une véritable clé secrète dans un environnement de production
+const SESSION_SECRET = 'SessionSecretePFE2024';  
 
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:3001', // Assurez-vous que cette URL correspond à celle du client
-    credentials: true
+    origin: 'http://localhost:3001',
 }));
 app.use(session({
     secret: SESSION_SECRET,
@@ -89,6 +88,25 @@ app.get('/user', async (req, res) => {
     }
 });
 
+//===================== R o u t e s == f o r m a t e u r =============================================
+
+app.post('/formateur', async (req, res) => {
+    try {
+        const { nom, prenom, matricule, type, mhs, nbrSemaine, metier, password, etablissementId } = req.body;
+        const etablissement = await Etablissement.findByPk(etablissementId);
+        if (!etablissement) {
+            return res.status(404).json({ message: 'Etablissement not found' });
+        }
+        const formateur = await Formateur.create({
+            etablissementId, nom, prenom, matricule, type, mhs, nbrSemaine, metier, password
+        });
+        res.status(201).json(formateur);
+    } catch (error) {
+        console.error('Error creating formateur:', error);
+        res.status(500).json({ message: 'Error creating formateur' });
+    }
+});
+//===================== A u t h e n t i f i c a t i o n == l o g i c ===============================
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     try {
